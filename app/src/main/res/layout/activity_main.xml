@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".simple.ui.MainActivity">
+
+    <TextView
+        android:id="@+id/tv_context_simple"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/shape_button"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:text="直接用于Context的情况"
+        android:textColor="#fff"/>
+
+    <TextView
+        android:id="@+id/tv_object_simple"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/shape_button"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:text="用于任意类中的情况"
+        android:textColor="#fff"/>
+
+    <TextView
+        android:id="@+id/tv_checker_simple"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/shape_button"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:text="自定义检查器的情况"
+        android:textColor="#fff"/>
+
+    <TextView
+        android:id="@+id/tv_callback_simple"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/shape_button"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:text="使用回调的情况"
+        android:textColor="#fff"/>
+
+</LinearLayout>
