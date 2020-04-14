@@ -56,4 +56,17 @@
         android:text="使用回调的情况"
         android:textColor="#fff"/>
 
+    <TextView
+        android:id="@+id/tv_filter_simple"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/shape_button"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:text="利用过滤操作控制按钮是否可点"
+        android:textColor="#fff"/>
+
 </LinearLayout>

@@ -12,6 +12,7 @@ import androidx.collection.ArrayMap;
 
 public class CheckHelper {
 
+    private static boolean showToast = true;
     private static ArrayMap<String, ArrayMap<SoftReference<View>,IChecker>> cache = new ArrayMap<>();
 
     public static void bind(Object target){
@@ -29,6 +30,10 @@ public class CheckHelper {
         }
     }
 
+    public static void notShowToastThisTime(){
+        showToast = false;
+    }
+
     private static void getToasts(Object target, ArrayMap<SoftReference<View>,IChecker> toastMap) throws CheckerException{
         Class clz = target.getClass();
         Field[] fields = clz.getDeclaredFields();
@@ -42,7 +47,7 @@ public class CheckHelper {
                         String toast = annotation.toast();
                         Class checker = annotation.checker();
                         IChecker iChecker = (IChecker) checker.newInstance();
-                        Log.e("check",iChecker.getClass().getSimpleName());
+                        Log.e("filter",iChecker.getClass().getSimpleName());
                         iChecker.setToast(toast);
                         SoftReference<View> srView = new SoftReference<>((View)o);
                         toastMap.put(srView,iChecker);
@@ -60,25 +65,25 @@ public class CheckHelper {
 
     public static boolean check(Object target) throws CheckerException {
         if(!(target instanceof Context)){
-            throw new CheckerException("target is not Context,use check(Context context,Object target)");
+            throw new CheckerException("target is not Context,use filter(Context context,Object target)");
         }else{
             return check((Context)target,target);
         }
     }
 
-    public static boolean check(Object target,Class filter) throws CheckerException {
+    public static boolean filter(Object target, Class filter) throws CheckerException {
         if(!(target instanceof Context)){
-            throw new CheckerException("target is not Context,use check(Context context,Object target)");
+            throw new CheckerException("target is not Context,use filter(Context context,Object target)");
         }else{
-            return check((Context)target,target,filter);
+            return filter((Context)target,target,filter);
         }
     }
 
     public static boolean check(Context context,Object target) throws CheckerException {
-        return check(context,target,null);
+        return filter(context,target,null);
     }
 
-    public static boolean check(Context context,Object target,Class filter) throws CheckerException {
+    public static boolean filter(Context context, Object target, Class filter) throws CheckerException {
         String key = String.valueOf(target.hashCode());
         ArrayMap<SoftReference<View>,IChecker> toastMap = cache.get(key);
         if(toastMap == null){
@@ -90,7 +95,10 @@ public class CheckHelper {
                 if(filter == null){
                     if(view != null && checker != null){
                         if(checker.check(view)){
-                            Toast.makeText(context,checker.getToast(),Toast.LENGTH_SHORT).show();
+                            if(showToast){
+                                Toast.makeText(context,checker.getToast(),Toast.LENGTH_SHORT).show();
+                                showToast = true;
+                            }
                             return false;
                         }
                     }
@@ -99,22 +107,26 @@ public class CheckHelper {
                     if(filter != null && checker.getClass().equals(filter)){
                         if(view != null && checker != null){
                             if(checker.check(view)){
-                                Toast.makeText(context,checker.getToast(),Toast.LENGTH_SHORT).show();
+                                if(showToast){
+                                    Toast.makeText(context,checker.getToast(),Toast.LENGTH_SHORT).show();
+                                    showToast = true;
+                                }
                                 return false;
                             }
                         }
                     }
                 }
             }
+            showToast = true;
             return true;
         }
     }
 
-    public static void checkForCallback(Object target,Callback callback) throws CheckerException {
-        checkForCallback(target,null,callback);
+    public static void callback(Object target, Callback callback) throws CheckerException {
+        filter(target,null,callback);
     }
 
-    public static void checkForCallback(Object target,Class filter,Callback callback) throws CheckerException {
+    public static void filter(Object target, Class filter, Callback callback) throws CheckerException {
         String key = String.valueOf(target.hashCode());
         ArrayMap<SoftReference<View>,IChecker> toastMap = cache.get(key);
         if(toastMap == null) throw new CheckerException("Checker not bind");

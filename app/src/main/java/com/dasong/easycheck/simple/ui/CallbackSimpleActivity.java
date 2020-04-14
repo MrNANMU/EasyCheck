@@ -45,7 +45,7 @@ public class CallbackSimpleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    CheckHelper.checkForCallback(CallbackSimpleActivity.this, new CheckHelper.Callback() {
+                    CheckHelper.callback(CallbackSimpleActivity.this, new CheckHelper.Callback() {
                         @Override
                         public void result(View view, boolean checkResult, String toast) {
                             if(checkResult){
@@ -62,7 +62,7 @@ public class CallbackSimpleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    CheckHelper.checkForCallback(CallbackSimpleActivity.this, MyChecker.class, new CheckHelper.Callback() {
+                    CheckHelper.filter(CallbackSimpleActivity.this, MyChecker.class, new CheckHelper.Callback() {
                         @Override
                         public void result(View view, boolean checkResult, String toast) {
                             if(checkResult){
