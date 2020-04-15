@@ -155,6 +155,8 @@ public class CheckHelper {
 
     public static void unbind(Object target){
         String key = String.valueOf(target.hashCode());
+        ArrayMap<SoftReference<View>,IChecker> value = cache.get(key);
+        if(value != null) value.clear();
         cache.remove(key);
     }
 
